@@ -1,5 +1,7 @@
 # ComandFast
-Códigos da aplicação ComandFast 
+<p  align="center">
+ <img src="https://raw.githubusercontent.com/cesarsst/ComandFast/master/pagina_loading.png" width="300" height="600">
+</p>
 
 # Documento de Requisitos: ComandFast 
 
@@ -67,4 +69,3 @@ Por fim, a aplicação tem comunicação com uma aplicação mobile, na qual per
 ## Diagrama do Banco de Dados:
 
 ![Diagrama da relação do bando de dados](https://raw.githubusercontent.com/cesarsst/ComandFast/master/Diagrama.png)
- 
