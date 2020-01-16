@@ -11,7 +11,7 @@ Esse documento contém as especificações tecnicas, assim como as regras de neg
 ComandFast é uma aplicação desenvolvida em NodeJS, React e React Native, na qual trás soluções para os pequenos e médios negócios na área de emissão, controle e gerenciamento de pedidos, especialmente quanto tratado em sistemas de comanda de restaurantes, bares e demais estabelecimentos comerciais.
 A aplicação conta com um servidor NodeJS, onde todas as regras de negócios estão situadas. É nesse servidor que toda a permanencia de dados é feita, auxiliada pelo uso de um banco de dados não relacional (MongoDB) e demais outras dependencias (leia mais na ala “dependencias”). 
 
-Para o gerenciamento por parte do administrador, todo controle é feito em uma pagina web, protegida por um sistema de login ligado ao serviços do servidor DevData IA, a qual permite acesso ao sistema contratado. Nessa página o usuario adminirador pode verificar todos os dados da aplicação, assim como modificar/adicionar atributos de acordo com suas necessidades. 
+Para o gerenciamento por parte do administrador, todo controle é feito em uma pagina web, protegida por um sistema de login ligado ao serviços do servidor DevData IA, a qual permite acesso ao sistema contratado. Nessa página o usuario administrador pode verificar todos os dados da aplicação, assim como modificar/adicionar atributos de acordo com suas necessidades. 
 
 Por fim, a aplicação tem comunicação com uma aplicação mobile, na qual permite a realização de pedidos, abertura/fechamento de mesas e outras funcionalidades. 
 
