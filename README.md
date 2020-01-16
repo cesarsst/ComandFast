@@ -1,6 +1,6 @@
 # ComandFast
 <p  align="center">
- <img src="https://raw.githubusercontent.com/cesarsst/ComandFast/master/pagina_loading.png" width="300" height="600">
+ <img src="" width="300" height="600">
 </p>
 
 # Documento de Requisitos: ComandFast 
