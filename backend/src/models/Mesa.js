@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 
 const MesaSchema = new mongoose.Schema({
     id_mesa: Number,
-    status: Boolean
+    status: {
+        type: Boolean,
+        default: true
+    }
 
 });
 

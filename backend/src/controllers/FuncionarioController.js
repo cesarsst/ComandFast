@@ -1,11 +1,12 @@
 const Funcionario = require('../models/Funcionario');
+const Endereco = require('../models/Endereco');
 
 module.exports = {
 
     // Registrando novo funcinário no banco de dados se não estiver cadastrado
     async store(req, res){
         
-        const { cpf, name, tel, ano_nasc, user_name, password, level } = req.body
+        const { cpf, name, tel, ano_nasc, user_name, password, level } = req.body;
         
         const FuncionarioExist = await Funcionario.findOne({cpf});
 
@@ -28,7 +29,7 @@ module.exports = {
 
     async update(req, res){
 
-        const { cpfSearch, cpf, name, tel, ano_nasc, user_name, password, level } = req.body
+        const { cpfSearch, cpf, name, tel, ano_nasc, user_name, password, level, active } = req.body
 
         const funcExist = await Funcionario.findOne({cpf:cpfSearch});
         
@@ -43,7 +44,8 @@ module.exports = {
             ano_nasc,
             user_name,
             password,
-            level
+            level,
+            active
         }}, (err, result)=>{
             if(!err){
                 return res.status(200).json({
@@ -70,11 +72,32 @@ module.exports = {
 
     },
 
+
+    async searchAll(req, res){
+
+
+        const funcExist = await Funcionario.find();
+        if(!funcExist){
+            return res.status(400).json({msg: "Não existe funcionários cadastrados!"});
+        }
+
+        return res.status(200).json({data: funcExist});
+
+    },
+
+
     async delete(req, res){
 
         const { cpf } = req.body;
 
         const funcExist = await Funcionario.findOne({cpf});
+        
+        const enderecoExist = await Endereco.findOneAndDelete({funcionario: funcExist._id}, (err, result)=>{
+            if(err){
+               return res.status(400).json({msg: "Não foi possível realizar a operação!"});
+            }
+        });
+
         if(!funcExist){
             return res.status(400).json({msg: "Funcionário não encontrado!"});
         }

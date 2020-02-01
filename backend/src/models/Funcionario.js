@@ -8,7 +8,11 @@ const FuncionarioSchema = new mongoose.Schema({
     ano_nasc: Date,
     user_name: String,
     password: String,
-    level: Number
+    level: Number,
+    active: {
+        type: Boolean,
+        default: true,
+    }
 });
 
 module.exports = mongoose.model('Funcionario', FuncionarioSchema);

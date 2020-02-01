@@ -1,0 +1,218 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/funcionario/getAllFuncionarios.js"></script>
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Gerenciar Funcionários</h1>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+  </div>
+
+  <!-- Content Row -->
+
+  <div class="row">
+
+     <!-- Basic Card Example -->
+     
+      <div class="card shadow">
+          
+          <div class="card-body">
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">CPF</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">User</th>
+                  <th scope="col">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="funcs">
+                
+                
+              
+             
+              </tbody>
+            </table>
+
+
+
+            
+       
+
+          </div>
+      </div>
+    
+  </div>
+
+
+
+
+</div>
+<!-- /.container-fluid -->
+
+
+<!-- Modal Delete Confirm-->
+<div class="modal fade " id="modalDeleteConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="msgDelete">
+        <h4>Deseja deletar esse funcionário?</h4>
+      </div>
+      <div class="modal-footer" id="buttonConfirmDelete">
+        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Delete Efetuar-->
+<div class="modal fade " id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="msgDelete">
+        <h4>Funcionário deletado com sucesso!</h4>
+      </div>
+      <div class="modal-footer">
+        <a href="/gerenciarFuncionario" type="button" class="btn btn-primary">OK!</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal update -->
+<div class="modal fade " id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="form-row">
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault01">CPF</label>
+              <input type="text" class="form-control" id="cpf" name="cpf" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault02">Nome Completo</label>
+              <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="inputState">Permissão</label>
+              <select id="level" name="level" class="form-control">
+                <option selected>Choose...</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+            </div>
+          
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault01">Telefone</label>
+              <input type="tel" class="form-control" id="tel" name="tel" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault02">Data de nascimento</label>
+              <input type="date" class="form-control" id="ano_nasc" name="ano_nasc" required>
+            </div>
+
+            
+
+          </div>
+
+          <div class="form-row">
+            
+            <div class="col-md-4 mb-3">
+              <label for="validationDefaultUserid">Username</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                </div>
+                <input type="text" class="form-control" id="user_name" name="user_name" aria-describedby="inputGroupPrepend2" required>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault02">Senha do sistema</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+
+          </div>
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <div id="buttonUpdate"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal update confirm-->
+<div class="modal fade " id="modalUpdateConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="msgDelete">
+        <h4>Funcionário atualizado com sucesso!</h4>
+      </div>
+      <div class="modal-footer">
+        <a href="/gerenciarFuncionario" type="button" class="btn btn-primary">OK!</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Loading-->
+<div class="modal fade " id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

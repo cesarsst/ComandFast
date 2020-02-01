@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 
 const EnderecoSchema = new mongoose.Schema({
-    cpf: Number,
+    funcionario: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Funcionario'
+    },
     num: Number,
     rua: String,
     bairro: String,
