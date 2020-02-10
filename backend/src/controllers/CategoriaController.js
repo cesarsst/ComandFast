@@ -7,42 +7,60 @@ module.exports = {
     async store(req, res){
 
         const { name } = req.body;
-        
-        const totalCategoria = await Categoria.find();
-        const newIdCategoria = totalCategoria.length + 1;
+        const idCategoriaExist = [];
         var permition = true;
 
-        //Verifica se não existe uma categoria ja cadastrada com esse nome
-        totalCategoria.forEach((object )=>{
-            if(name.toLowerCase() == object.name.toLowerCase()){
+        const totalCategoria = await Categoria.find();
+        totalCategoria.forEach((categoria) => {
+            idCategoriaExist.push(categoria.id_categorie);
+
+            //Verifica se não existe uma categoria ja cadastrada com esse nome
+            if(name.toLowerCase() == categoria.name.toLowerCase()){
                 permition = false;
-            }  
-        })
-        
+            } 
+
+        });
+
+        // Se existe uma categoria com o mesmo nome
         if(!permition){
             return res.status(400).json({msg: "Já existe uma categoria com esse nome"});
         }
+
+        // Ordenando valores dos id_categoria
+        idCategoriaExist.sort();
+       
+        // Descobrindo uma id válida
+        let i = 1;
+        while(true){
         
-        // Se não existir, cria uma nova categoria
-        await Categoria.create({
-            id_categorie: newIdCategoria,
-            name: name
-        }, (err, result) =>{
-            if(err){
-                return res.status(400).json({msg: "Erro ao realizar a operação! Contate o suporte."});
-            } else {
-                return res.status(200).json({msg: "Categoria adicionada com sucesso!", data: result});
+            if(idCategoriaExist.indexOf(i) === -1){
+                
+                const newCategorie = await Categoria.create({
+                    id_categorie: i,
+                    name
+                });
+
+                if(newCategorie){
+                    return res.status(200).json({msg:" Categoria cadastrada com sucesso!"});
+                } else {
+                    return res.status(400).json({msg: "Erro ao cadastrar nova categoria! Conte o suporte!"});
+                }
+
+                break;
             }
-        })
+
+            i++;
+        }
 
     },
+
 
     // Busca todas as categorias
     async search(req, res){
         
         const allCategorias = await Categoria.find();
         
-        return res.status(200).json(allCategorias);
+        return res.status(200).json({data:allCategorias});
     },
 
 

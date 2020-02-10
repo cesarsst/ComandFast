@@ -29,34 +29,28 @@ module.exports = {
 
     async update(req, res){
 
-        const { cpfSearch, cpf, name, tel, ano_nasc, user_name, password, level, active } = req.body
+        const { cpf, name, tel, ano_nasc, user_name, password, level, active } = req.body
 
-        const funcExist = await Funcionario.findOne({cpf:cpfSearch});
+        const funcExist = await Funcionario.findOne({cpf});
         
         if(!funcExist){
            return res.status(400).json({msg: "Não foi possível realizar a alteração!"});
         }
 
-        const searchFunc = await Funcionario.findOneAndUpdate(cpf, {$set:{
-            cpf, 
-            name, 
-            tel,
-            ano_nasc,
-            user_name,
-            password,
-            level,
-            active
-        }}, (err, result)=>{
-            if(!err){
-                return res.status(200).json({
-                    msg: "Funcionário atualizado com sucesso!",
-                    data: result
-                });
-            }
-        });
+        
+        funcExist.cpf = cpf;
+        funcExist.name = name;
+        funcExist.tel = tel;
+        funcExist.ano_nasc = ano_nasc;
+        funcExist.user_name = user_name;
+        funcExist.password = password;
+        funcExist.level = level;
+        funcExist.active = active;
+        funcExist.save();
 
+        return res.status(200).json({msg: "Funcionário atualizado com sucesso!"});
 
-
+   
     },
 
     async search(req, res){

@@ -11,6 +11,14 @@ const PedidoSchema = new mongoose.Schema({
     mesa: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mesa'
+    },
+    comanda: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comanda'
+    },
+    status: {
+        type: Boolean,
+        default: true
     }
     
 });

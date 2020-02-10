@@ -7,10 +7,7 @@ const ProdutoSchema = new mongoose.Schema({
     name: String,
     describe: String, 
     price: Number,
-    categorie: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Categoria'
-    }
+    categorie: String
 }, {
     toJSON:{
         virtuals: true,

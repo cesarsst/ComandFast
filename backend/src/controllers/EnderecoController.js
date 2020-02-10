@@ -71,6 +71,27 @@ module.exports = {
             res.status(200).json({msg: "Endereço atualizado com sucesso!"});
         }); 
 
+    },
+
+
+    async searchEndereco(req, res){
+        
+        const { cpf } = req.body;
+
+        // Busca se existe funcionario correspondente ao cpf
+        const funcExist = await Funcionario.findOne({cpf});
+        if(!funcExist){
+            return res.status(400).json({msg: "Funcionário não encontrado!"});
+        }
+
+        // Busca se existe um endereço cadastrado em nome do funcionário buscado
+       const enderecoExist = await Endereco.findOne({funcionario: funcExist._id});
+       if(!enderecoExist){
+           return res.status(400).json({msg: "O funcionario '" + funcExist.name + "' não possui endereço cadastrado!"});
+       }
+
+       return res.status(200).json({data: enderecoExist});
+
     }
     
 }

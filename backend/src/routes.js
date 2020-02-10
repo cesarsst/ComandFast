@@ -11,6 +11,7 @@ const MesaController = require('./controllers/MesaController');
 const CategoriaController = require('./controllers/CategoriaController');
 const ProdutosController = require('./controllers/ProdutoController');
 const PedidoController = require('./controllers/PedidoController');
+const ComandaController = require('./controllers/ComandaController');
 
 
 // API ROUTES 
@@ -25,12 +26,15 @@ routes.delete('/deleteFunc', FuncionarioController.delete);
 // Endereços Maneger Routes
 routes.post('/registerEndereco', EnderecoController.store);
 routes.put('/updateEndereco/:cpf', EnderecoController.update);
+routes.post('/searchEndereco', EnderecoController.searchEndereco);
 
 // Mesas Maneger Routes
 routes.post('/registerMesa', MesaController.store);
 routes.put('/searchMesa/:id_mesa', MesaController.search);
 routes.get('/addNewMesa', MesaController.addNewMesa);
 routes.delete('/deleteMesa/:id_mesa', MesaController.delete);
+routes.post('/updateMesa', MesaController.update);
+
 
 // Categoria Maneger Routes
 routes.post('/registerCategoria', CategoriaController.store);
@@ -40,9 +44,13 @@ routes.delete('/deleteCategoria/:id', CategoriaController.delete);
 
 // Produtos Maneger Routes
 routes.post('/registerProduto', upload.single('thumbnail'), ProdutosController.store);
-routes.get('/searchProduto', ProdutosController.search);
-routes.put('/updateProduto/:id', ProdutosController.update);
+routes.put('/searchProduto/:id', ProdutosController.search);
+routes.put('/updateProduto/:id', upload.single('thumbnail'), ProdutosController.update);
 routes.delete('/deleteProduto/:id', ProdutosController.delete);
+
+// Comanda Maneger Routes
+routes.post('/searchComanda', ComandaController.search);
+
 
 // Pedidos Maneger Routes
 routes.post('/registerPedido', PedidoController.store);

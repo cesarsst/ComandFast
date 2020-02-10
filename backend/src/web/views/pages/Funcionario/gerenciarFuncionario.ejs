@@ -68,8 +68,8 @@
       <div class="modal-body" id="msgDelete">
         <h4>Deseja deletar esse funcionário?</h4>
       </div>
-      <div class="modal-footer" id="buttonConfirmDelete">
-        
+      <div class="modal-footer">
+        <div id="buttonConfirmDelete"> </div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
       </div>
     </div>
@@ -101,12 +101,14 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <h1>Atualizar dados</h1>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <div id="loading"></div>
       <div class="modal-body">
-        
+
           <div class="form-row">
 
             <div class="col-md-4 mb-3">
@@ -141,7 +143,7 @@
 
             <div class="col-md-4 mb-3">
               <label for="validationDefault02">Data de nascimento</label>
-              <input type="date" class="form-control" id="ano_nasc" name="ano_nasc" required>
+              <input type="text" class="form-control" id="ano_nasc" name="ano_nasc" required>
             </div>
 
             
@@ -167,8 +169,6 @@
 
 
           </div>
-
-
 
 
       </div>
@@ -212,6 +212,93 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal update Endereco-->
+<div class="modal fade " id="modalEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Endereço</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="form-row">
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault01">CPF funcionário</label>
+              <input type="text" class="form-control" id="cpfFunc" name="cpfFunc" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault02">Número</label>
+              <input type="text" class="form-control" id="num" name="num" required>
+            </div>
+
+            
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault02">Rua</label>
+              <input type="text" class="form-control" id="rua" name="rua" required>
+            </div>
+           
+          
+
+          </div>
+
+          <div class="form-row">
+
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault01">Bairro</label>
+              <input type="text" class="form-control" id="bairro" name="bairro" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault01">Cidade</label>
+              <input type="text" class="form-control" id="cidade" name="cidade" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="validationDefault02">Estado</label>
+              <input type="text" class="form-control" id="estado" name="estado" required>
+            </div>
+            
+
+          </div>
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <div id="buttonEndereco"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal endreco confirm-->
+<div class="modal fade " id="modalEnderecoConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="msgDelete">
+        <h4>Endereço atualizado com sucesso!</h4>
+      </div>
+      <div class="modal-footer">
+        <a href="/gerenciarFuncionario" type="button" class="btn btn-primary">OK!</a>
       </div>
     </div>
   </div>

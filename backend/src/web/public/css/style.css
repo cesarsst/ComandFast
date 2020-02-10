@@ -12,3 +12,9 @@
     animation: spin 1s linear infinite;
     margin-top: 200px;
 }
+
+
+.addNewProduct-Comand{
+    padding: 12px;
+    margin-top: 10%;
+}

@@ -1,0 +1,286 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/produtos/request.js"></script>
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Gerenciar Produtos</h1>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+  </div>
+
+  <!-- Content Row -->
+
+
+  <div class="row">
+
+     <!-- Basic Card Example -->
+
+      <div class="card shadow">
+          
+          <div class="card-body">
+
+
+            <div class="d-flex flex-row">
+              <div class="col mb-3 ml-3 mt-3 ">      
+                  <button class="btn btn-primary" onclick='newProduct();' id="btnEnviarDados"><span>+</span> Novo produto</button>             
+              </div>
+
+              <div class="col"></div>
+
+               <!-- Topbar Search -->
+          <form class="col  mb-3 ml-3 mt-3 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+            </div>
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Foto</th>
+                  <th scope="col">Código</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Preço</th>
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="products">
+                
+                
+              
+             
+              </tbody>
+            </table>
+
+
+
+            
+       
+
+          </div>
+      </div>
+    
+  </div>
+
+
+
+
+</div>
+<!-- /.container-fluid -->
+
+
+
+<!-- Modal update -->
+<div class="modal fade " id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" id="titleModal">
+        <h4>Atualizar Produtos</h1>
+      </div>
+      <div id="loading"></div>
+      <div class="modal-body">
+
+        <div id="modalUpdateContent">
+
+          
+              <div class="form-row">
+                <div class="col mb-3">              
+                  <label for="inputState">Imagem</label>
+                  <div class="custom-file">                    
+                    <input type="file" class="custom-file-input" id="thumbnail">
+                    <label class="custom-file-label" for="customFile">Escolha a imagem do produto...</label>
+                  </div>               
+
+                </div>
+              </div>
+
+              <div class="form-row">
+
+                <div class="col mb-3">
+                  <label for="validationDefault01">Código do produto</label>
+                  <input type="text" class="form-control" id="id_product" name="id_product" required disabled>
+                </div>
+
+                <div class="col mb-3">
+                  <label for="validationDefault02">Nome </label>
+                  <input type="text" class="form-control" id="name" name="name" required>
+                </div>         
+
+              </div>
+
+              <div class="form-row">
+                
+
+                <div class="col mb-3">
+                  <label for="validationDefault02">Preço (em reais)</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupPrepend2">R$:</span>
+                    </div>
+                    <input type="text" class="form-control" id="price" name="price" required>
+                 </div>
+                </div>
+
+                <div class="col mb-3">
+                  <label for="inputState">Categorias</label>
+                  <select id="categorie" name="categorie" class="form-control">
+                    <option selected>Choose...</option>                    
+                  </select>
+                </div>
+
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="validationDefault01">Descrição</label>
+                  <input type="textarea" class="form-control"  id="describe" name="describe" required>
+                </div>
+              </div>
+
+          
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <div id="buttonCloseModal"> <a href="/gerenciarProdutos" type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Fechar</a> </div>
+        <div id="buttonUpdate"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal New Produto -->
+<div class="modal fade " id="modalNewProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" id="titleModal">
+        <h4>Adicionar Produtos</h1>
+      </div>
+      <div id="loading"></div>
+      <div class="modal-body">
+
+        <div id="modalNewProductContent">
+
+          
+              <div class="form-row">
+                <div class="col mb-3">              
+                  
+                  <label for="inputState">Imagem</label>
+                  <div class="custom-file">                    
+                    <input type="file" class="custom-file-input" id="thumbnailNew">
+                    <label class="custom-file-label" for="customFile">Escolha a imagem do produto...</label>
+                  </div>               
+
+                </div>
+              </div>
+
+              <div class="form-row">
+
+                <div class="col mb-3">
+                  <label for="validationDefault01">Código do produto</label>
+                  <input type="text" class="form-control" id="id_productNew" name="id_productNew" placeholder="Código automático" required disabled>
+                </div>
+
+                <div class="col mb-3">
+                  <label for="validationDefault02">Nome </label>
+                  <input type="text" class="form-control" id="nameNew" name="nameNew" required>
+                </div>         
+
+              </div>
+
+              <div class="form-row">
+                
+
+                <div class="col mb-3">
+                  <label for="validationDefault02">Preço (em reais)</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupPrepend2">R$:</span>
+                    </div>
+                    <input type="number" class="form-control" id="priceNew" name="priceNew" required>
+                  </div>
+                </div>
+
+                <div class="col mb-3">
+                  <label for="inputState">Categorias</label>
+                  <select id="categorieNew" name="categorieNew" class="form-control">
+                    <option selected>Choose...</option>
+                    
+                  </select>
+                </div>
+
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="validationDefault01">Descrição</label>
+                  <input type="textarea" class="form-control" id="describeNew" name="describeNew" required>
+                </div>
+              </div>
+
+          
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <div id="buttonCloseModal"> <a href="/gerenciarProdutos" type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Fechar</a> </div>
+        <div id="buttonAddNew"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Delete Confirm -->
+<div class="modal fade " id="modalDeleteConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" id="titleModal">
+        <h4>Deseja deletar este produto?</h4>
+      </div>
+      <div id="loading"></div>
+      <div class="modal-body">
+
+        <div id="modalUpdateContentDelete">
+
+          
+          <span>Produtos deletados não podem ser recuperado!</span>
+                    
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <div id="buttonCloseModalDelete"> <a href="#" type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Fechar</a> </div>
+        <div id="buttonDeleteConfirm"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>

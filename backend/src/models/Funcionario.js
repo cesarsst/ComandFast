@@ -5,7 +5,7 @@ const FuncionarioSchema = new mongoose.Schema({
     cpf: Number,
     name: String,
     tel: String,
-    ano_nasc: Date,
+    ano_nasc: String,
     user_name: String,
     password: String,
     level: Number,

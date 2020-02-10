@@ -1,4 +1,8 @@
 const Mesa = require('../models/Mesa');
+const Pedido = require('../models/Pedido');
+const Comanda = require('../models/Comanda');
+
+const ComandaController = require('../controllers/ComandaController');
 
 module.exports = {
 
@@ -36,7 +40,7 @@ module.exports = {
                 return res.status(200).json({msg: "Nenhuma mesa foi criada ainda!"});
             }
 
-            return res.status(200).json({msg: "Quantidade total de mesas: " + totalMesa.length});
+            return res.status(200).json({msg: "Quantidade total de mesas: " + totalMesa.length, data: totalMesa});
         } else {
 
             const mesa = await Mesa.findOne({id_mesa});
@@ -74,6 +78,59 @@ module.exports = {
         mesa.delete();
         return res.status(200).json({msg: "Mesa " + id_mesa + " removida com sucesso!"});
      
-    } 
+    },
+
+    async update(req, res){
+
+        const { id_mesa, status } = req.body;
+
+        const mesa = await Mesa.findOne({id_mesa});
+        if(!mesa){
+            return res.status(400).json({msg: "Não foi possível completar a ação, mesa inexistente!"});
+        }
+    
+    // Abrindo uma Mesa e sua comanda
+        if(status == "true"){
+        
+            const comandaExist = await Comanda.find({mesa: id_mesa, status: true});
+            if(comandaExist.length > 0){
+                return res.status(400).json({msg: "Erro ao executar operação! Já existe uma comanda para essa mesa!"});
+            }
+
+            await ComandaController.store(id_mesa);
+
+            mesa.status = true;
+            mesa.save();
+
+            return res.status(200).json({msg: "Mesa aberta com sucesso!"});
+        } 
+    
+    // Fechando a mesa
+        if(status == "false") {
+
+            // Se existir pedidos sendo processados, não permite fechamento da comanda
+            const pedidoOpenExist = await Pedido.find({mesa: mesa._id, status: true});
+            if(pedidoOpenExist.length > 0){
+                return res.status(400).json({msg: "Existem pedidos em aberto nessa mesa! Feche a comanda para executar essa ação"});
+            }
+
+            // Se pedidos estão encerrados, fecha a comanda da mesa
+            const comandaExist = await Comanda.findOne({mesa: id_mesa, status: true});
+            if(comandaExist){
+                comandaExist.status = false;
+                comandaExist.save();
+            } else {
+                return res.status(400).json({msg:"Erro fatal. Contate a equipe DevData! Error: 0001"})
+            }
+            
+            mesa.status = false;
+            mesa.save();
+            return res.status(200).json({msg: "Mesa fechada com sucesso!"});
+           
+
+        }
+        
+
+    }
 
 }

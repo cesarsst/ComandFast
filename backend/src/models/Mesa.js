@@ -5,7 +5,7 @@ const MesaSchema = new mongoose.Schema({
     id_mesa: Number,
     status: {
         type: Boolean,
-        default: true
+        default: false
     }
 
 });

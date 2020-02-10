@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const Categoria = require('../models/Categoria');
 const Produto = require('../models/Produto');
 
@@ -9,38 +11,68 @@ module.exports = {
         const { filename } = req.file;
         const { name, describe, price, categorie } = req.body;
 
-        const categoria = await Categoria.findOne({name: categorie});
-        if(!categoria){
-            return res.status(400).json({msg: "Categoria não encontrada!"});
-        }
+        const idProductExist = [];
 
-        const productExist = await Produto.findOne({name});
-        if(!productExist){
+        const totalProducts = await Produto.find();
+        totalProducts.forEach((produto) => {
+            idProductExist.push(produto.id_product);
+        });
+
+        idProductExist.sort();
+
+           // Descobrindo uma id válida
+           let idDisponivel = 1;
+           while(true){
+           
+               if(idProductExist.indexOf(idDisponivel) === -1){
+                   
+                    const categoria = await Categoria.findOne({name: categorie});
+                    if(!categoria){
+                        return res.status(400).json({msg: "Categoria não encontrada!"});
+                    }
             
-            const idProduto = (await Produto.find()).length + 1;
+                    const productExist = await Produto.findOne({name});
+                    if(!productExist){
+                            
+                        await Produto.create({
+                            thumbnail: filename,
+                            name,
+                            id_product: idDisponivel,
+                            describe, 
+                            price,
+                            categorie: categoria.name
+                        })
+            
+                        return res.status(200).json({msg: "Produto Cadastrado com sucesso!"});
+                    } else {
+                        return res.status(400).json({msg: "Já existe um produto com esse nome cadastrado!"});
+                    }
 
-            await Produto.create({
-                thumbnail: filename,
-                name,
-                id_product: idProduto,
-                describe, 
-                price,
-                categorie: categoria._id
-            })
+                    break;           
+            }
 
-            return res.status(200).json({msg: "Produto Cadastrado com sucesso!"});
-        } else {
-            return res.status(400).json({msg: "Já existe um produto com esse nome cadastrado!"});
+            idDisponivel++;             
         }
+        
 
     },
 
 
     async search(req, res){
 
-        const produtos = await Produto.find();
+        const { id } = req.params;
 
-        return res.status(200).json({allProducts: produtos});
+        let produtos = [];
+
+        if(id === 'all'){
+             produtos = await Produto.find();
+        } else {
+            produtos = await Produto.findOne({id_product: id});
+        }
+       
+
+
+        return res.status(200).json({data: produtos});
         
     },
 
@@ -59,18 +91,19 @@ module.exports = {
             return res.status(400).json({msg: "Produto não encontrado!"});
         }
 
+        var filename = produto.thumbnail;
+        if(req.file){
+            filename = req.file.filename; 
+        }
 
-       await Produto.findOneAndUpdate({ id_product: id }, {$set: {
-            name,
-            describe,
-            price,
-            categorie: categoria._id
-       }}, (err, result) =>{
-           if(!err){
-                return res.status(200).json({msg: "Produto atualizado com sucesso!"});
-           }
-       });
+        produto.thumbnail= filename;
+        produto.name = name;
+        produto.describe = describe;
+        produto.price = price;
+        produto.categorie = categorie;
+        produto.save();
 
+        return res.status(200).json({msg: "Produto atualizado com sucesso!"});
     },
 
     async delete(req, res){
@@ -81,6 +114,11 @@ module.exports = {
         if(!produto){
             return res.status(400).json({msg: "Produto não encontrado!"});
         }
+
+        if(produto.thumbnail != ""){
+            await fs.unlinkSync('uploads/'+ produto.thumbnail);
+        }
+ 
 
         produto.delete();
 

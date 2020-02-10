@@ -18,6 +18,12 @@ routes.get('/gerenciarFuncionario', (req, res)=> {
     res.render('index', { page: 'pages/Funcionario/gerenciarFuncionario'});
 });
 
+routes.get('/gerenciarMesa', (req, res)=> { 
+    res.render('index', { page: 'pages/Mesas/gerenciarMesa'});
+});
 
+routes.get('/gerenciarProdutos', (req, res)=> { 
+    res.render('index', { page: 'pages/Produtos/gerenciarProdutos'});
+});
 
 module.exports = routes;
